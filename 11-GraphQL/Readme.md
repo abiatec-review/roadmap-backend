@@ -1,3 +1,11 @@
+Key concepts of the GraphQL query language are:
+
+- Hierarchical
+- Product‐centric
+- Strong‐typing
+- Client‐specified queries
+- Introspective
+
 ## official learn article
 
 https://graphql.org/learn/
@@ -21,8 +29,6 @@ https://graphql.org/learn/
 theory with questions - https://www.howtographql.com/basics/0-introduction/
 
 creating graphql server with questions - https://www.howtographql.com/graphql-js/0-introduction/
-
-https://skillvalue.com/en/quiz/web-api/graphql-quiz-medium-level/
 
 ## video
 
