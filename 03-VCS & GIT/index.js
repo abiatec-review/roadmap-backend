@@ -1,4 +1,4 @@
-// Тренажёр
+// Тренажёр - обучалка по git
 // https://learngitbranching.js.org/?locale=ru_RU
 
 // Как можно убрать коммит из ветки?
