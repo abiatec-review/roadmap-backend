@@ -1,4 +1,4 @@
-import { existsSync, writeFile } from 'fs';
+import { existsSync, createWriteStream } from 'fs';
 import path from 'path';
 import { __dirname } from './helper.js';
 
@@ -9,10 +9,16 @@ export const create = async () => {
     if (existsSync(pathToFile)) {
       throw new Error('FS operation failed');
     } else {
-      await writeFile(pathToFile, 'I am fresh and young', (err) => {
-        if (err) throw err;
-        console.info('FS operation succeed');
-      });
+      const fw = createWriteStream(pathToFile);
+
+      fw.write('I am fresh and young!\n');
+      fw.end();
+
+      // without stream
+      // await writeFile(pathToFile, 'I am fresh and young', (err) => {
+      //   if (err) throw err;
+      //   console.info('FS operation succeed');
+      // });
     }
   } catch (error) {
     throw new Error(`can't create - ${error}`);

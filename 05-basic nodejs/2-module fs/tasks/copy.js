@@ -21,13 +21,18 @@ const copy = async () => {
       }
       if (files.length) {
         for (let i = 0; i < files.length; i += 1) {
-          const fr = createReadStream(path.join(pathToFiles, files[i]));
-          const fw = createWriteStream(path.join(pathToFilesCopy, files[i]));
+          const f = files[i];
+          const fr = createReadStream(path.join(pathToFiles, f));
+          const fw = createWriteStream(path.join(pathToFilesCopy, f));
 
           fr.on('data', (chunk) => {
             fw.write(chunk);
           });
 
+          fr.on('end', () => {
+            fw.end();
+            console.log(`file ${f} reading is finished`);
+          });
           // without stream
           // copyFile(path.join(pathToFiles, files[i]), path.join(pathToFilesCopy, files[i]), (err) => {
           //   if (err) throw err;
