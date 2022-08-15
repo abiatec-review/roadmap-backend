@@ -12,6 +12,7 @@ Assignment contains several nested folders inside `src`. Your task is to impleme
 - Use 16 LTS version of Node.js
 - Don't change signature of pre-written functions (e.g. don't rename them, don't remove export, don't make them synchronous, etc.)
 - Prefer asynchronous API whenever possible
+- Prefer streams to read or write files
 
 ## Subtasks
 

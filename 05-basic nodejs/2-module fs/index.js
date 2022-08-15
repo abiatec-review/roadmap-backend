@@ -2,3 +2,7 @@
 
 // expample fs/promises
 // https://nodejsdev.ru/api/fs/
+
+
+// pipes
+// https://metanit.com/web/nodejs/2.11.php
