@@ -16,7 +16,11 @@ const sendResult = (number) => {
     });
 
     worker.on('error', (err) => {
-      reject(err);
+      // reject(err);
+      return {
+        status: 'reject',
+        data: err
+      };
     });
 
     worker.on('exit', () => {
