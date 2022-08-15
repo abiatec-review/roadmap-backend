@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form method="post" onsubmit="(event)=>{
+    event.preventDefault();
+  }">
+    <input type="text" name="message" id="message">
+    <button type="submit">Send message</button>
+  </form>
+
+  <script>
+    // let messagesList = 
+    const subscribe = async () => {
+      try {
+        const { data } = await fetch('http://localhost:8080/get-messages');
+        console.log("🚀 ~ file: longPollingSolution.js ~ line 43 ~ subscribe ~ data", data);
+        await subscribe();
+      } catch (error) {
+        setTimeout(() => {
+          subscribe();
+        }, 500);
+      }
+    }
+  </script>
+</body>
+
+</html>
