@@ -23,34 +23,10 @@
         event.preventDefault();
         const response = fetch('http://localhost:8080/new-messages', {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          // mode: 'cors', // no-cors, *cors, same-origin
-          // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          // credentials: 'same-origin', // include, *same-origin, omit
-          // mode: 'cors',
-
           headers: {
             'Content-Type': 'application/json',
             mode: 'cors'
-            // 'Access-Control-Allow-Origin': '*' /* @dev First, read about security */,
-            // 'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-            // 'Access-Control-Max-Age': 2592000, // 30 days
-            // 'Access-Control-Allow-Credentials': 'true',
-            // 'Access-Control-Allow-Headers': 'true',
-            // 'Origin': 'true',
-            // 'Accept': 'true',
-            // 'Content-Type': 'true',
-
-            // "Access-Control-Allow-Headers": "Content-Type",
-            // "Access-Control-Allow-Origin": "http://localhost:8080",
-            // "Access-Control-Allow-Methods": "POST,GET"
-            // ' X-Requested-With': 'true',
-            // ' Access-Control-Request-Method': 'true',
-            // ' Access-Control-Request-Headers': 'true'
-
-            // 'Content-Type': 'application/x-www-form-urlencoded',
           },
-          // redirect: 'follow', // manual, *follow, error
-          // referrerPolicy: 'no-referrer', // no-referrer, *client
           body: JSON.stringify(form['message']) // body data type must match "Content-Type" header
         });
       };
@@ -58,25 +34,20 @@
       form.onsubmit = submitHandler;
     }
 
-    // let messagesList = 
     const chatDiv = document.getElementById('chat');
     let chatData = [];
     const subscribe = async () => {
       try {
         const data = await fetch('http://localhost:8080/get-messages');
-        console.log("🚀 ~ file: longPollingSolution.js ~ line 43 ~ subscribe ~ data", data);
         if (data && data.length && data.length !== chatData.length) {
           chatData = data;
           chatDiv = `<ul>${data.map((item) => `<li>${item}</li>`)}</ul>`;
         }
-
-        // setTimeout(() => {
-        //   subscribe();
-        // }, 500);
+        subscribe()
       } catch (error) {
-        // setTimeout(() => {
-        //   subscribe();
-        // }, 500);
+        setTimeout(() => {
+          subscribe();
+        }, 500);
       }
     }
     subscribe();
