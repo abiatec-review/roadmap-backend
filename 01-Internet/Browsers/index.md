@@ -32,3 +32,20 @@ How to get such a certificate? You apply and Certificate Authority through a val
 If your website contains payments, then it has to be PCI(payment card industry) complient, and TSL is one of the dozen requirements.
 
 Response
+Once connection DNS=>TCP=>TLS is established browser sends an initial request. Server returns a page.
+Page is returned byte by byte and follows TCP slow-start procedure. First 14 KB are sent by a server, then server is waiting for ACK on that, after that it sends 28KB, waits for ACK, sends 56KB and so on. Server start is needed as server doesn't know network capabilities and wants to gradually ramp up the speed until optimal speed is found(for example once ACKS start missing).
+This slow-start is important to know as it would be ideal if first server response is less than 14 KB, so that we don't do more TCP communication and start requesting other resources as fast as possible.
+
+Parsing
+Upong getting the initial package(first 14 KB), browser starts immediatly parsing, with the goal of building DOM and CSSOM. Therefore even if the initial page is way bigger than 14KB its better to include all the important high-prio info for rendering in the first 14kb.
+Critical rendering path includes:
+1) Parsing markup into DOM. TOkenization and building the tree. Images and css files are non-blocking, but js files ARE BLOCKING and it's not good for performance.
+To help with the external resource loading(css, images, fonts and especially js) before parsing even starts our preload scanner parses the markup and upon encounting those tags immediatly requests resources.
+2) Parsing CSS into CSSOM. Browser takes CSS descriptions generates a tree of styles it can work with. Browser starts with a user-agent style sheet tree and sequentially refines it, applying cascade. Performance wise it's so insignificant that it's not even shown in dev tools. Time to construct CSSOM is less than a single DNS lookup.
+While this is happening our downloaded js files are also being parsed into ASTs, interpreted and executed.
+Accessebility tree is also generated, which is like semantic DOM for screen readers.
+3) Merging DOM and CSSOM.
+4) Painting DOM and CSSOM on the screen.
+
+
+
