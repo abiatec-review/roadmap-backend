@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form id="form">
+    <input type="text" name="message" id="message">
+    <button type="submit">Send message</button>
+  </form>
+  <div id="chat">
+
+  </div>
+  <script>
+    const form = document.getElementById('form');
+    if (form) {
+      const submitHandler = (event) => {
+        event.preventDefault();
+        const response = fetch('http://localhost:8080/new-messages', {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          headers: {
+            'Content-Type': 'application/json',
+            mode: 'cors'
+          },
+          body: JSON.stringify(form['message']) // body data type must match "Content-Type" header
+        });
+      };
+
+      form.onsubmit = submitHandler;
+    }
+
+    const chatDiv = document.getElementById('chat');
+    let chatData = [];
+    const subscribe = async () => {
+      try {
+        const data = await fetch('http://localhost:8080/get-messages');
+        if (data && data.length && data.length !== chatData.length) {
+          chatData = data;
+          chatDiv = `<ul>${data.map((item) => `<li>${item}</li>`)}</ul>`;
+        }
+        subscribe()
+      } catch (error) {
+        setTimeout(() => {
+          subscribe();
+        }, 500);
+      }
+    }
+    subscribe();
+  </script>
+</body>
+
+</html>
